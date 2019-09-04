@@ -2,25 +2,36 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h1>Hello World!</h1>
-    <h2>{{data}}</h2>
+    <h2 v-if="!data">{{data}}</h2>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "HelloWorld",
   data() {
     return {
-      data: 11
+      data: null
     };
   },
   props: {
     msg: String
   },
   async mounted() {
-    const res = await fetch("http://localhost:8000/");
-    const data = await res.text();
-    this.data = data;
+    // try {
+    // const res = await fetch("http://localhost:8000/");
+    // const data = await res.text();
+    // this.data = data;
+
+    axios
+      .get("http://localhost:8000/")
+      .then(res => console.log(res))
+      .catch(e => console.log(e.response));
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 };
 </script>
